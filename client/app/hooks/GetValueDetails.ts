@@ -10,7 +10,6 @@ export const GetValueDetails = ({
     data: value,
     isLoading,
     isError,
-    error,
   } = useReadContract({
     abi: ContractA,
     address: DIAMOND_ADDRESS,
