@@ -58,7 +58,6 @@ const FacetUpgrade = ({ isUpgraded }: { isUpgraded: boolean }) => {
   };
   return (
     <div>
-      <p>SuperAdmin : {adminAddress}</p>
       {!isUpgraded ? (
         <button
           onClick={updateFacet}
