@@ -235,13 +235,7 @@ export const ContractAUpgraded = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_superAdmin",
-        type: "address",
-      },
-    ],
+    inputs: [],
     name: "initializeUpgraded",
     outputs: [],
     stateMutability: "nonpayable",

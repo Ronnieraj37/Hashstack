@@ -8,8 +8,6 @@ import {LibDiamond} from "../libraries/LibDiamond.sol";
 error Unauthorized();
 
 contract ContractA is ReentrancyGuard, Initializable {
-    address public contractAdmin;
-
     modifier checkIfAdmin() {
         if (LibDiamond.contractOwner() == msg.sender) _;
         else revert Unauthorized();

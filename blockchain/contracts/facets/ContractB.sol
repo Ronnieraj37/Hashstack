@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import {Initializable} from "./helper/Initializable.sol";
-import {LibDiamond} from "../libraries/LibDiamond.sol";
 error Unauthorized();
 
 contract ContractB is AccessControl, Initializable {
@@ -11,9 +10,9 @@ contract ContractB is AccessControl, Initializable {
 
     address public superAdmin;
 
-    function initializeUpgraded() external initializer {
-        address _superAdmin = LibDiamond.contractOwner();
+    function initializeUpgraded(address _superAdmin) external initializer {
         _grantRole(DEFAULT_ADMIN_ROLE, _superAdmin);
+        grantRole(ADMIN_ROLE, _superAdmin);
         superAdmin = _superAdmin;
     }
 
@@ -23,7 +22,7 @@ contract ContractB is AccessControl, Initializable {
     }
 
     // Function to add an admin
-    function addAdmin(address admin) external {
+    function addAdmin(address admin) internal {
         grantRole(ADMIN_ROLE, admin);
     }
 

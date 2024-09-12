@@ -1,23 +1,19 @@
-import { ContractA } from "@/abi/ContractA";
 import { sepolia } from "viem/chains";
 import { useReadContract } from "wagmi";
 import { DIAMOND_ADDRESS } from "../constants";
-export const GetValueDetails = ({
+import { ContractAUpgraded } from "@/abi/ContractAUpgraded";
+export const GetAdminRole = ({
   address,
 }: {
   address: `0x${string}` | undefined;
 }) => {
-  const {
-    data: value,
-    isLoading,
-    isError,
-  } = useReadContract({
+  const { data: value, isLoading } = useReadContract({
     chainId: sepolia.id,
-    abi: ContractA,
+    abi: ContractAUpgraded,
     address: DIAMOND_ADDRESS,
-    functionName: "getValue",
+    functionName: "checkAdminRole",
     account: address,
   });
 
-  return { value, isLoading, isError };
+  return { value, isLoading };
 };

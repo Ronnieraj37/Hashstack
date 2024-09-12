@@ -62,15 +62,6 @@ async function deployDiamond() {
   if (!receipt.status) {
     throw Error(`Diamond upgrade failed: ${tx.hash}`);
   }
-
-  try {
-    const contractA = await ethers.getContractAt("ContractA", diamond.address);
-    console.log(await contractA.getValue());
-    await contractA.setValue(10);
-    console.log(await contractA.getValue());
-  } catch (error) {
-    console.log("Error", error);
-  }
   console.log("Completed diamond cut", diamond.address);
 
   return diamond.address;

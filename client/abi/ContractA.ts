@@ -1,11 +1,6 @@
 export const ContractA = [
   {
     inputs: [],
-    name: "Already_Initialized",
-    type: "error",
-  },
-  {
-    inputs: [],
     name: "ReentrancyGuardReentrantCall",
     type: "error",
   },
@@ -38,13 +33,6 @@ export const ContractA = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "initialize",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
