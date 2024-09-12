@@ -11,19 +11,6 @@ export const ContractA = [
   },
   {
     inputs: [],
-    name: "contractAdmin",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "getValue",
     outputs: [
       {

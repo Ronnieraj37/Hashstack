@@ -1,5 +1,4 @@
 import { ContractA } from "@/abi/ContractA";
-import { sepolia } from "viem/chains";
 import { useReadContract } from "wagmi";
 import { DIAMOND_ADDRESS } from "../constants";
 export const GetValueDetails = ({
@@ -11,13 +10,13 @@ export const GetValueDetails = ({
     data: value,
     isLoading,
     isError,
+    error,
   } = useReadContract({
-    chainId: sepolia.id,
     abi: ContractA,
     address: DIAMOND_ADDRESS,
     functionName: "getValue",
     account: address,
   });
-
+  console.log("data : ", value, error);
   return { value, isLoading, isError };
 };

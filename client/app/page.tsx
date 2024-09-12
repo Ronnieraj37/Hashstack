@@ -13,13 +13,16 @@ export default function Home() {
   const { writeContractAsync } = useWriteContract();
   const [isDAdmin, setisDAdmin] = useState(false);
   const claimOwnership = async () => {
-    await writeContractAsync({
-      address: DIAMOND_ADDRESS,
-      abi: OwnershipFacet,
-      functionName: "transferOwnership",
-      args: [address!],
-    });
-    // toast.success(`Removed Candidate ${candidate.name}`);
+    try {
+      await writeContractAsync({
+        address: DIAMOND_ADDRESS,
+        abi: OwnershipFacet,
+        functionName: "transferOwnership",
+        args: [address!],
+      });
+    } catch (error) {
+      console.log("Error", error);
+    }
   };
   useEffect(() => {
     setisDAdmin(address == diamondAdmin);

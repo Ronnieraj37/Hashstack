@@ -5,13 +5,15 @@ const {
   getContractFactory,
 } = require("@nomiclabs/hardhat-ethers/types/index.js");
 const { getSelectors, FacetCutAction } = require("./libraries/diamond.js");
+const { ethers } = require("hardhat");
 
 async function upgradeDiamond() {
   const accounts = await ethers.getSigners();
   const owner = accounts[0];
   const notOwner = accounts[1];
-  const address = await deployDiamond();
+  const { address, facetA } = await deployDiamond();
   // deploy Diamond
+  console.log("Address , facetA", address, facetA);
   const diamond = await ethers.getContractAt("Diamond", address);
   console.log("Diamond deployed:", diamond.address);
   console.log("");
@@ -54,7 +56,7 @@ async function upgradeDiamond() {
   }
 
   //   upgrade diamond with facets
-  console.log("");
+  console.log("cut : ", cut);
   const diamondCutFacet = await ethers.getContractAt(
     "DiamondCutFacet",
     diamond.address
@@ -73,12 +75,16 @@ async function upgradeDiamond() {
       "ContractAUpgraded",
       diamond.address
     );
-    await contractUpgraded.initializeUpgraded();
+    await contractUpgraded.initialize();
 
     // console.log("What is value ? : ", await contractUpgraded.getValue());
-    await contractUpgraded.addAdmin(owner.address);
+    // await contractUpgraded.addAdmin(owner.address);
     const res = await contractUpgraded.getValue();
     console.log("changed Value : ", Number(res));
+    console.log(
+      "IsAdmin ? : ",
+      await contractUpgraded.checkAdminRole(accounts[0].address)
+    );
   } catch (error) {
     console.log("Error", error);
   }
@@ -113,9 +119,11 @@ async function deployDiamond() {
 
   const FacetNames = ["DiamondLoupeFacet", "OwnershipFacet", "ContractA"];
   const cut = [];
+  let facetA;
   for (const FacetName of FacetNames) {
     const Facet = await ethers.getContractFactory(FacetName);
     const facet = await Facet.deploy();
+    if (FacetName == "ContractA") facetA = facet.address;
     await facet.deployed();
     cut.push({
       facetAddress: facet.address,
@@ -123,6 +131,7 @@ async function deployDiamond() {
       functionSelectors: getSelectors(facet),
     });
   }
+  console.log("Cut : ", cut);
 
   const diamondCut = await ethers.getContractAt("IDiamondCut", diamond.address);
   let tx;
@@ -140,7 +149,7 @@ async function deployDiamond() {
   await contractA.setValue(10);
   const res = await contractA.getValue();
   console.log("changed Value : ", Number(res));
-  return diamond.address;
+  return { address: diamond.address, facetA };
 }
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.

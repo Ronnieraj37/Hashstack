@@ -1,3 +1,3 @@
 # Hashstack
 
-Contract live at : 0x0e3237eF45ac7eD1537D037A21a804E266d1b54A
+Contract live at : [0xec839eA55823f664283365821d2fe85CB7Eb922D](https://testnet.snowtrace.io/address/0xec839eA55823f664283365821d2fe85CB7Eb922D)

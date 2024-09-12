@@ -16,6 +16,11 @@ module.exports = {
       url: process.env.RPC_URL_SEPOLIA,
       accounts: [process.env.PRIVATE_KEY],
     },
+    fuji: {
+      allowUnlimitedContractSize: true,
+      url: process.env.RPC_URL_FUJI,
+      accounts: [process.env.PRIVATE_KEY],
+    },
     bsc: {
       allowUnlimitedContractSize: true,
       url: process.env.RPC_URL_BSC,

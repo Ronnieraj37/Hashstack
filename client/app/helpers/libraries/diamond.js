@@ -1,4 +1,4 @@
-import ethers from "ethers";
+import { ethers } from "ethers";
 export const FacetCutAction = { Add: 0, Replace: 1, Remove: 2 };
 
 // get function selectors from ABI

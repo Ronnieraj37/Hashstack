@@ -8,7 +8,6 @@ async function deployUpgraded() {
   const contractAUpgraded = await ContractAUpgraded.deploy();
   await contractAUpgraded.deployed();
   console.log("contractAUpgraded deployed:", contractAUpgraded.address);
-
   return contractAUpgraded.address;
 }
 

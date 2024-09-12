@@ -9,6 +9,12 @@ error Unauthorized();
 
 contract ContractAUpgraded is ReentrancyGuard, ContractB {
     event TestEvent(address something);
+    uint256[50] private __gap; // Ensure storage layout compatibility
+
+    modifier checkIfAdmin() {
+        if (hasRole(ADMIN_ROLE, msg.sender)) _;
+        else revert Unauthorized();
+    }
 
     function setValue(uint _number) external nonReentrant checkIfAdmin {
         LibStorage.ContractStorage storage s = LibStorage.getContractStorage();

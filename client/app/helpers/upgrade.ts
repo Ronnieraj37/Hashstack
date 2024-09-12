@@ -5,8 +5,6 @@ import { ethers } from "ethers";
 import { CONTRACTA_UPGRADED_ADDRESS } from "../constants";
 
 export const upgradeDiamond = async () => {
-  // const provider = new ethers.providers.JsonRpcProvider(signer);
-  // const signer = provider.getSigner();
   const FacetNames = ["ContractAUpgraded"];
   const cut = [];
   const selectorsToReplace = ["0x55241077", "0x20965255"];
