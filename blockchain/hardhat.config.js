@@ -1,30 +1,19 @@
-
 /* global ethers task */
-require('@nomiclabs/hardhat-waffle')
+require("@nomiclabs/hardhat-waffle");
 require("dotenv").config();
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: '0.8.6',
+  solidity: "0.8.19",
   networks: {
     hardhat: {
       allowUnlimitedContractSize: true,
     },
-    amoy: {
-      allowUnlimitedContractSize: true,
-      url: process.env.RPC_URL_AMOY,
-      accounts: [process.env.PRIVATE_KEY],
-    },
     sepolia: {
       allowUnlimitedContractSize: true,
       url: process.env.RPC_URL_SEPOLIA,
-      accounts: [process.env.PRIVATE_KEY],
-    },
-    fuji: {
-      allowUnlimitedContractSize: true,
-      url: process.env.RPC_URL_FUJI,
       accounts: [process.env.PRIVATE_KEY],
     },
     bsc: {
@@ -42,7 +31,7 @@ module.exports = {
   settings: {
     optimizer: {
       enabled: true,
-      runs: 200
-    }
-  }
-}
+      runs: 200,
+    },
+  },
+};

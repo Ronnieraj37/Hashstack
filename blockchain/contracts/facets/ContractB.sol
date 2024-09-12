@@ -1,32 +1,45 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import {LibStorage} from "../libraries/LibStorage.sol";
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import {Initializable} from "./helper/Initializable.sol";
+import {LibDiamond} from "../libraries/LibDiamond.sol";
+error Unauthorized();
 
-contract ContractB is AccessControl {
-    bytes32 public constant SUPER_ADMIN_ROLE = keccak256("SUPER_ADMIN_ROLE");
+contract ContractB is AccessControl, Initializable {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
-    constructor(address superAdmin) {
-        _setupRole(SUPER_ADMIN_ROLE, superAdmin);
-        _setRoleAdmin(ADMIN_ROLE, SUPER_ADMIN_ROLE);
+    address public superAdmin;
+
+    function initializeUpgraded() external initializer {
+        address _superAdmin = LibDiamond.contractOwner();
+        _grantRole(DEFAULT_ADMIN_ROLE, _superAdmin);
+        superAdmin = _superAdmin;
     }
 
-    function addAdmin(address account) public onlyRole(SUPER_ADMIN_ROLE) {
-        grantRole(ADMIN_ROLE, account);
+    modifier checkIfAdmin() {
+        if (hasRole(ADMIN_ROLE, msg.sender)) _;
+        else revert Unauthorized();
     }
 
-    function removeAdmin(address account) public onlyRole(SUPER_ADMIN_ROLE) {
-        revokeRole(ADMIN_ROLE, account);
+    // Function to add an admin
+    function addAdmin(address admin) external {
+        grantRole(ADMIN_ROLE, admin);
     }
 
-    function transferAdminRole(address oldAdmin, address newAdmin) public onlyRole(SUPER_ADMIN_ROLE) {
-        revokeRole(ADMIN_ROLE, oldAdmin);
-        grantRole(ADMIN_ROLE, newAdmin);
+    // Function to remove an admin
+    function removeAdmin(address admin) external {
+        revokeRole(ADMIN_ROLE, admin);
     }
 
-    function renounceAdminRole() public {
-        renounceRole(ADMIN_ROLE, msg.sender);
+    // Transfer the superadmin role to another address (including contract B)
+    function transferSuperadminRole(address newSuperAdmin) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, msg.sender), "Only superadmin can transfer role");
+        revokeRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        grantRole(DEFAULT_ADMIN_ROLE, newSuperAdmin);
+    }
+
+    function checkAdminRole(address admin) external view returns (bool) {
+        return hasRole(ADMIN_ROLE, admin);
     }
 }

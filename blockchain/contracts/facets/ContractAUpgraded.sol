@@ -1,19 +1,14 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 import {LibStorage} from "../libraries/LibStorage.sol";
 import {ReentrancyGuard} from "./helper/ReentrancyGuard.sol";
-import {Initializable} from "./helper/Initializable.sol";
-import {LibDiamond} from "../libraries/LibDiamond.sol";
+import {ContractB} from "./ContractB.sol";
+
 error Unauthorized();
 
-contract ContractA is ReentrancyGuard, Initializable {
-    address public contractAdmin;
-
-    modifier checkIfAdmin() {
-        if (LibDiamond.contractOwner() == msg.sender) _;
-        else revert Unauthorized();
-    }
+contract ContractAUpgraded is ReentrancyGuard, ContractB {
+    event TestEvent(address something);
 
     function setValue(uint _number) external nonReentrant checkIfAdmin {
         LibStorage.ContractStorage storage s = LibStorage.getContractStorage();

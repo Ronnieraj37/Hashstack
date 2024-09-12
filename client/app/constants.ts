@@ -1,0 +1,6 @@
+export const DIAMOND_ADDRESS =
+  "0xB01Fd464623f7Eb62f9AdeCc9F8E5Dce70EfE4bE" as `0x${string}`;
+export const CONTRACTA_ADDRESS =
+  "0x77D7714D042Db4F600C89a5f9508ead63aB69D16" as `0x${string}`;
+export const CONTRACTA_UPGRADED_ADDRESS =
+  "0x177C6678A1c121Ec80E115895b5AD1700aEC9B9a" as `0x${string}`;
