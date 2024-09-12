@@ -14,10 +14,8 @@ const ValueCard = ({ isDAdmin }: { isDAdmin: boolean }) => {
   const { isAdmin } = CheckIfAdmin({
     address: address!,
   });
-  console.log("Is Admin ? ", isAdmin);
   const { writeContractAsync } = useWriteContract();
   const { facetAddress } = GetUpgradeDetails();
-  // GetAdminRole();
   const [newValue, setnewValue] = useState<number>(0);
   const updateValue = async () => {
     try {

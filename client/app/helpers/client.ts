@@ -1,7 +1,7 @@
 "use client";
 import { getDefaultConfig } from "@rainbow-me/rainbowkit";
 import { QueryClient } from "@tanstack/react-query";
-import { avalancheFuji, sepolia } from "wagmi/chains";
+import { avalancheFuji } from "wagmi/chains";
 import { darkTheme } from "@rainbow-me/rainbowkit";
 
 export const config = getDefaultConfig({

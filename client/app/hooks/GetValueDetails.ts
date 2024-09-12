@@ -17,6 +17,5 @@ export const GetValueDetails = ({
     functionName: "getValue",
     account: address,
   });
-  console.log("data : ", value, error);
   return { value, isLoading, isError };
 };
